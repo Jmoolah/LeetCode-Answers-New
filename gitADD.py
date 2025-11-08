@@ -37,11 +37,11 @@ else:
         prob_num = match.group(1) if match else None
 
         if code == "??":
-            added.append(f"problem {prob_num}" if prob_num else f"added {base_name}")
+            added.append(f"problem {prob_num}" if prob_num else base_name)
         elif code.strip() == "M":
-            modified.append(f"problem {prob_num}" if prob_num else f"modified {base_name}")
+            modified.append(f"problem {prob_num}" if prob_num else base_name)
         elif code.strip() == "D":
-            removed.append(f"problem {prob_num}" if prob_num else f"removed {base_name}")
+            removed.append(f"problem {prob_num}" if prob_num else base_name)
 
     # Stage all changes
     subprocess.run(["git", "add", "."])

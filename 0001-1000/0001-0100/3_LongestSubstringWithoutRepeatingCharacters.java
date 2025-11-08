@@ -1,8 +1,9 @@
 class Solution {
     public int lengthOfLongestSubstring(String s) {
         char[] sArr = s.toCharArray();
-        int high = 0;
+       
     
+        //test
         //test
         int count = 0;
         HashSet<Character> hs = new HashSet<>();
