@@ -4,7 +4,7 @@ import re
 
 # Path to your local repo
 repo_path = r"D:\Main\LETTCODE GITHUB"
-script_name = "git.py"  # Name of this script
+script_name = "git.py"  # Change if your script has a different name
 os.chdir(repo_path)
 
 # Get git status
@@ -18,19 +18,17 @@ else:
     modified = []
     removed = []
 
+    # Keep track if the script itself changed
+    script_changed = False
+
     for line in changes.splitlines():
         code, path = line[:2], line[3:]
         base_name = os.path.basename(path)
 
-        # Handle the script file separately
+        # Detect if the script itself changed
         if base_name == script_name:
-            if code == "??":
-                added.append("the script")
-            elif code.strip() == "M":
-                modified.append("the script")
-            elif code.strip() == "D":
-                removed.append("the script")
-            continue
+            script_changed = True
+            continue  # Skip adding it to normal commit messages
 
         # Extract problem number from filename
         match = re.match(r"(\d+)_", base_name)
@@ -54,6 +52,10 @@ else:
         messages.append("modified " + ", ".join(modified))
     if removed:
         messages.append("removed " + ", ".join(removed))
+
+    # Append script change as a separate note if it changed
+    if script_changed:
+        messages.append("modified the script")
 
     commit_message = "; ".join(messages) if messages else "Updated repo"
 
