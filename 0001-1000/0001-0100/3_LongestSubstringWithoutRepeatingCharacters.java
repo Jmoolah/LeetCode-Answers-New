@@ -3,7 +3,7 @@ class Solution {
         char[] sArr = s.toCharArray();
         int high = 0;
     
-
+        //test
         int count = 0;
         HashSet<Character> hs = new HashSet<>();
         for(int i =0; i < s.length();i++){
