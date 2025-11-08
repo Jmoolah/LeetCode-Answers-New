@@ -4,6 +4,7 @@ import re
 
 # Path to your local repo
 repo_path = r"D:\Main\LETTCODE GITHUB"
+script_name = "git.py"  # change this to the name of this script if different
 os.chdir(repo_path)
 
 # Get git status
@@ -19,24 +20,31 @@ else:
 
     for line in changes.splitlines():
         code, path = line[:2], line[3:]
+        # Skip the script itself
+        if os.path.basename(path) == script_name:
+            continue
+        # Extract problem number from filename (assumes format "123_problemName.java")
+        match = re.match(r"(\d+)_", os.path.basename(path))
+        prob_num = match.group(1) if match else "unknown"
+
         if code == "??":
-            added.append(path)
+            added.append(prob_num)
         elif code.strip() == "M":
-            modified.append(path)
+            modified.append(prob_num)
         elif code.strip() == "D":
-            removed.append(path)
+            removed.append(prob_num)
 
     # Stage all changes
     subprocess.run(["git", "add", "."])
 
-    # Build a concise commit message
+    # Build a short commit message
     messages = []
     if added:
-        messages.append("added " + ", ".join([os.path.basename(f) for f in added]))
+        messages.append("added problem " + ", ".join(added))
     if modified:
-        messages.append("modified " + ", ".join([os.path.basename(f) for f in modified]))
+        messages.append("modified problem " + ", ".join(modified))
     if removed:
-        messages.append("removed " + ", ".join([os.path.basename(f) for f in removed]))
+        messages.append("removed problem " + ", ".join(removed))
 
     commit_message = "; ".join(messages)
 
