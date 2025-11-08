@@ -10,7 +10,7 @@ class Solution {
                 negative++;
             } 
 
-            //updarte
+            
            
         }
         return (negative%2!=0) ? -1:1;
