@@ -5,7 +5,7 @@ class Solution {
             if(x%3!=0){
                 count++;
             }
-            
+            //test
         }
         return count;
     }
