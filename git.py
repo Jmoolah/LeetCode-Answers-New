@@ -3,7 +3,7 @@ import os
 # Current folder is the local repo
 repo_path = os.getcwd()
 
-max_problem_number = 3000
+max_problem_number = 4000
 subfolder_size = 100
 topfolder_size = 1000
 
