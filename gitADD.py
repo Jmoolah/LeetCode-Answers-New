@@ -2,9 +2,31 @@ import subprocess
 import os
 import re
 
+# ---- Config ----
 repo_path = r"D:\Main\LETTCODE GITHUB"
 script_name = "gitADD.py"  # This script’s filename
 os.chdir(repo_path)
+
+# ---- Folder creation config ----
+max_problem_number = 4000
+subfolder_size = 100
+topfolder_size = 1000
+num_digits = len(str(max_problem_number))
+
+# ---- Create folders if missing ----
+for top_start in range(1, max_problem_number + 1, topfolder_size):
+    top_end = min(top_start + topfolder_size - 1, max_problem_number)
+    top_folder_name = f"{str(top_start).zfill(num_digits)}-{str(top_end).zfill(num_digits)}"
+    top_folder_path = os.path.join(repo_path, top_folder_name)
+    os.makedirs(top_folder_path, exist_ok=True)
+
+    for sub_start in range(top_start, top_end + 1, subfolder_size):
+        sub_end = min(sub_start + subfolder_size - 1, top_end)
+        sub_folder_name = f"{str(sub_start).zfill(num_digits)}-{str(sub_end).zfill(num_digits)}"
+        sub_folder_path = os.path.join(top_folder_path, sub_folder_name)
+        os.makedirs(sub_folder_path, exist_ok=True)
+
+print("All folders created successfully!")
 
 # ---- Helper: run commands ----
 def run(cmd):
@@ -67,7 +89,7 @@ if messages:
     commit_message = "; ".join(messages)
     run(["git", "commit", "-m", commit_message])
 
-    # IMPORTANT: pull before push
+    # Pull before push
     run(["git", "pull", "--rebase"])
 
     run(["git", "push"])
