@@ -6,6 +6,15 @@ repo_path = r"D:\Main\LETTCODE GITHUB"
 script_name = "gitADD.py"  # Your script filename
 os.chdir(repo_path)
 
+# Pull latest changes from remote
+print("Pulling latest changes from remote...")
+pull_result = subprocess.run(["git", "pull", "origin", "main"], capture_output=True, text=True)
+print(pull_result.stdout)
+if pull_result.returncode != 0:
+    print("Error during pull:")
+    print(pull_result.stderr)
+    exit(1)
+
 # Get git status
 status = subprocess.run(["git", "status", "--porcelain"], capture_output=True, text=True)
 changes = status.stdout.strip()
@@ -38,7 +47,7 @@ else:
 
     # Stage everything first
     subprocess.run(["git", "add", "."])
-
+    
     # Unstage the script if it changed
     if script_changed:
         subprocess.run(["git", "reset", script_name])
