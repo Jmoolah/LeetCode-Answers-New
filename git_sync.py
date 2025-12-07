@@ -14,7 +14,7 @@ if result.stderr:
 
 # Check if there were conflicts
 if result.returncode != 0:
-    print("\n❌ Conflicts detected or pull failed!")
+    print("\n Conflicts detected or pull failed!")
     print("You need to manually resolve conflicts.")
     print("\nTo resolve:")
     print("1. Open conflicted files and fix them")
@@ -22,7 +22,7 @@ if result.returncode != 0:
     print("3. Run: git rebase --continue")
     print("4. Run: git push")
 else:
-    print("\n✅ Successfully synced with remote!")
+    print("\n Successfully synced with remote!")
     
     # Now push
     print("\nPushing to remote...")
@@ -32,6 +32,6 @@ else:
         print(push_result.stderr)
     
     if push_result.returncode == 0:
-        print("\n✅ Successfully pushed to remote!")
+        print("\n Successfully pushed to remote!")
     else:
         print("\n❌ Push failed!")
